@@ -136,46 +136,62 @@ h1, h2, h3 {
   animation: pulse-glow 4s ease-in-out infinite;
 }
 
-/* Professor Walking Cycle Animations */
-@keyframes walk-bob {
+/* 3D Realistic Door & Hinges */
+.perspective-door-container {
+  perspective: 1200px;
+  perspective-origin: center;
+}
+
+.door-panel {
+  transform-origin: left center;
+  transition: transform 1.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 1.6s ease;
+  transform-style: preserve-3d;
+}
+
+.door-open-3d {
+  transform: rotateY(-74deg);
+}
+
+/* Professor Distinguished Walking Cycle Animations */
+@keyframes distinguished-walk-bob {
   0%, 100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-8px);
+    transform: translateY(-4px);
   }
 }
 
-@keyframes walk-left-leg {
+@keyframes stride-left {
   0%, 100% {
-    transform: rotate(22deg);
+    transform: rotate(14deg);
   }
   50% {
-    transform: rotate(-22deg);
+    transform: rotate(-14deg);
   }
 }
 
-@keyframes walk-right-leg {
+@keyframes stride-right {
   0%, 100% {
-    transform: rotate(-22deg);
+    transform: rotate(-14deg);
   }
   50% {
-    transform: rotate(22deg);
+    transform: rotate(14deg);
   }
 }
 
-.animate-walk-bob {
-  animation: walk-bob 0.45s ease-in-out infinite;
+.animate-distinguished-walk {
+  animation: distinguished-walk-bob 0.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
-.animate-walk-left {
-  animation: walk-left-leg 0.45s ease-in-out infinite;
-  transform-origin: top center;
+.animate-stride-left {
+  animation: stride-left 0.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  transform-origin: 50% 5%;
 }
 
-.animate-walk-right {
-  animation: walk-right-leg 0.45s ease-in-out infinite;
-  transform-origin: top center;
+.animate-stride-right {
+  animation: stride-right 0.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  transform-origin: 50% 5%;
 }
 
 /* Buttons */
