@@ -1,0 +1,8 @@
+{
+  "name": "Cassify",
+  "description": "Case competition preparation and practice platform for business students, consulting clubs, and institutions. Think sharper. Play higher.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
