@@ -29,17 +29,9 @@ body {
 }
 
 /* Custom cursor styling for fine pointers */
-body.custom-cursor-active,
-body.custom-cursor-active a,
-body.custom-cursor-active button,
-body.custom-cursor-active [role="button"],
-body.custom-cursor-active input,
-body.custom-cursor-active select,
-body.custom-cursor-active textarea,
-body.custom-cursor-active label,
 body.custom-cursor-active .case-card,
 body.custom-cursor-active .case-link {
-  cursor: none !important;
+  cursor: pointer;
 }
 
 h1, h2, h3 {
@@ -79,17 +71,12 @@ h1, h2, h3 {
   }
 }
 
-/* Scroll reveal animations */
+/* Scroll reveal animations (safe by default) */
 .reveal-on-scroll {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
-}
-
-.reveal-on-scroll.is-revealed {
   opacity: 1;
   transform: translateY(0);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
 /* Card hover lift effect */
