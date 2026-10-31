@@ -19,10 +19,13 @@ import { PrivacyPage } from './components/PrivacyPage';
 import { AuthModal } from './components/AuthModal';
 import { ReadingProgressBar } from './components/ReadingProgressBar';
 import { CustomCursor } from './components/CustomCursor';
+import { MentorAvatar } from './components/MentorAvatar';
+import { IntroSequence } from './components/IntroSequence';
 import { useScrollReveal } from './hooks/useScrollReveal';
 import { CaseItem, CASES_DATA } from './data/cases';
 
 export const App: React.FC = () => {
+  const [showIntro, setShowIntro] = useState<boolean>(true);
   const [currentView, setCurrentView] = useState<'showcase' | 'dashboard' | 'billing' | 'privacy'>('showcase');
   const [activeCase, setActiveCase] = useState<CaseItem | null>(null);
   const [isInstitutionModalOpen, setIsInstitutionModalOpen] = useState(false);
@@ -191,7 +194,11 @@ export const App: React.FC = () => {
       <Footer
         onNavigate={setCurrentView}
         onOpenPrivacySettings={() => setCurrentView('privacy')}
+        onReplayIntro={() => setShowIntro(true)}
       />
+
+      {/* Cinematic Intro Sequence: Background comes first, door opens, professor walks out, bows, casts Abracadabra, launches site */}
+      {showIntro && <IntroSequence onComplete={() => setShowIntro(false)} />}
 
       {/* Case Solving Modal */}
       <CaseDialog
@@ -221,6 +228,18 @@ export const App: React.FC = () => {
         onConsent={handleConsentChoice}
         onViewPrivacy={() => setCurrentView('privacy')}
       />
+
+      {/* Duolingo / Clash of Clans Style Study Guide Avatar (Prof. Cass) */}
+      {currentView === 'showcase' && (
+        <MentorAvatar
+          onOpenCase={(caseId) => {
+            const item = CASES_DATA.find((c) => c.id === caseId);
+            if (item) setActiveCase(item);
+          }}
+          onNavigateToWorkspace={() => setCurrentView('dashboard')}
+          earnedXp={earnedXp}
+        />
+      )}
     </div>
   );
 };

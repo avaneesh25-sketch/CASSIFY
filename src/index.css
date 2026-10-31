@@ -136,6 +136,48 @@ h1, h2, h3 {
   animation: pulse-glow 4s ease-in-out infinite;
 }
 
+/* Professor Walking Cycle Animations */
+@keyframes walk-bob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes walk-left-leg {
+  0%, 100% {
+    transform: rotate(22deg);
+  }
+  50% {
+    transform: rotate(-22deg);
+  }
+}
+
+@keyframes walk-right-leg {
+  0%, 100% {
+    transform: rotate(-22deg);
+  }
+  50% {
+    transform: rotate(22deg);
+  }
+}
+
+.animate-walk-bob {
+  animation: walk-bob 0.45s ease-in-out infinite;
+}
+
+.animate-walk-left {
+  animation: walk-left-leg 0.45s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+.animate-walk-right {
+  animation: walk-right-leg 0.45s ease-in-out infinite;
+  transform-origin: top center;
+}
+
 /* Buttons */
 .button-primary {
   background: var(--ink);
