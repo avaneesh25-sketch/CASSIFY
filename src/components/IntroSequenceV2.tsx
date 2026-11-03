@@ -59,9 +59,9 @@ export const IntroSequence: React.FC<{
         <div className="relative z-10 min-h-screen flex flex-col justify-center items-center px-4 py-12">
           <button onClick={onComplete} className="absolute right-5 top-5 text-xs rounded-full border border-white/30 px-4 py-2 hover:bg-white/10">{copy.skip}</button>
           <div className="cassify-portal-scene relative w-[280px] h-[465px] sm:w-[390px] sm:h-[550px] flex justify-center items-end">
-            <div className="absolute left-1/2 -translate-x-1/2 bottom-7 w-[200px] h-[355px] sm:w-[245px] sm:h-[420px] rounded-t-[130px] border-[11px] border-[#526d4a] shadow-[0_0_90px_rgba(198,250,88,.25)] bg-[#19281e] overflow-visible" style={{perspective:'1100px'}}>
+            <div className="absolute left-1/2 -translate-x-1/2 bottom-7 w-[200px] h-[355px] sm:w-[245px] sm:h-[420px] rounded-t-[130px] border-[11px] border-[#526d4a] shadow-[0_0_90px_rgba(198,250,88,.25)] bg-transparent overflow-visible" style={{perspective:'1100px'}}>
               <div className={`absolute inset-0 rounded-t-full bg-gradient-to-b from-[#fff7d9] via-[#c6fa58] to-[#688b44] transition-opacity duration-1000 ${open?'opacity-100':'opacity-0'}`}/>
-              <div className={`cassify-door absolute inset-0 rounded-t-full border-[4px] border-[#74593d] bg-gradient-to-r from-[#533d2c] via-[#846044] to-[#493324] shadow-2xl ${open?'cassify-door-open':''}`}>
+              <div className={`cassify-door z-[3] absolute inset-0 rounded-t-full border-[4px] border-[#74593d] bg-gradient-to-r from-[#533d2c] via-[#846044] to-[#493324] shadow-2xl ${open?'cassify-door-open':''}`}>
                 <div className="absolute inset-4 rounded-t-full border-2 border-[#ae8660]/70"/>
                 <div className="absolute top-1/3 left-7 right-7 bottom-12 border border-[#a67c54]/55 rounded-md"/>
                 <div className="absolute right-4 top-1/2 w-4 h-10 rounded-full bg-[#dfc16b] shadow-lg">
@@ -69,7 +69,7 @@ export const IntroSequence: React.FC<{
                 </div>
               </div>
             </div>
-            <div className={`absolute bottom-0 left-1/2 w-[165px] sm:w-[200px] cassify-professor-motion ${stage}`}>
+            <div className={`absolute bottom-0 left-1/2 w-[165px] sm:w-[200px] z-[2] cassify-professor-motion ${stage}`}>
               <ProfessorCharacter pose={stage==='handle'?'reach':stage==='walk'?'walk':stage==='greet'?'greet':'idle'} className="w-full h-auto drop-shadow-[0_20px_20px_rgba(0,0,0,.55)]"/>
             </div>
           </div>
