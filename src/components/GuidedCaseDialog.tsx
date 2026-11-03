@@ -78,14 +78,14 @@ export const GuidedCaseDialog:React.FC<Props> = ({
       </div>
       <p className="text-[11px] tracking-[.14em] font-black text-[#536942] mt-3">{c.mentor}</p>
       <div className="bg-white rounded-2xl p-4 mt-3 border border-[#d5dfc7] shadow-sm">
-       <strong className="text-sm">{c.tip}</strong>
-       <p aria-live="polite" className="text-[13px] leading-6 mt-2">{advice[Math.max(0,hint-1)]}</p>
+       <strong className="text-sm">{c.mentor} · {c.tip}</strong>
+       <p aria-live="polite" className="text-[13px] leading-6 mt-2">{hint===0 ? `${c.welcome} ${c.stepOne} ${c.question}` : advice[Math.max(0,hint-1)]}</p>
       </div>
       <button type="button" onClick={()=>setHint(v=>Math.min(3,v+1))} disabled={hint>=3}
        className="rounded-xl mt-4 bg-[#172019] text-[#c6fa58] p-3 text-sm font-bold disabled:opacity-50">
        {hint===0?c.hint:c.moreHint} {hint>0?`(${hint}/3)`:''}
       </button>
-      <p className="text-xs text-[#65745d] mt-3">Hints are designed to guide your reasoning without providing an instant answer.</p>
+      <p className="text-xs text-[#65745d] mt-3">Choose an option above. I’ll guide your reasoning, not just reveal the answer.</p>
      </aside>
     </div>
    </div>
