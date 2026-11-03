@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ProfessorCharacter } from './ProfessorCharacter';
 import { LANGUAGES, Language, getCopy } from '../data/i18n';
 
-type Stage = 'language'|'approach'|'handle'|'open'|'walk'|'greet'|'exit';
+type Stage = 'language'|'inside'|'handle'|'open'|'walk'|'greet'|'suction'|'exit';
 export const IntroSequence: React.FC<{
   language: Language;
   onLanguage: (language: Language) => void;
@@ -14,10 +14,10 @@ export const IntroSequence: React.FC<{
   useEffect(() => {
     if(stage==='language') return;
     const timeouts: Record<Exclude<Stage,'language'>,number> = {
-      approach: 1100,handle:1050,open:1600,walk:2400,greet:1450,exit:500
+      inside: 800,handle:900,open:1350,walk:1800,greet:1100,suction:1250,exit:100
     };
     const next: Record<Exclude<Stage,'language'>,Stage> = {
-      approach:'handle',handle:'open',open:'walk',walk:'greet',greet:'exit',exit:'exit'
+      inside:'handle',handle:'open',open:'walk',walk:'greet',greet:'suction',suction:'exit',exit:'exit'
     };
     const timeout=window.setTimeout(()=> {
       if(stage==='exit') onComplete();
@@ -29,13 +29,13 @@ export const IntroSequence: React.FC<{
     const onKey=(event:KeyboardEvent) => { if(event.key==='Escape' && stage!=='language') onComplete(); };
     window.addEventListener('keydown',onKey);return()=>window.removeEventListener('keydown',onKey);
   },[stage,onComplete]);
-  const begin = () => {onLanguage(selected);setStage('approach');};
+  const begin = () => {onLanguage(selected);setStage('inside');};
   const open = stage==='open'||stage==='walk'||stage==='greet'||stage==='exit';
   return (
-    <div className="fixed inset-0 z-[10000] bg-[#0c100d] text-[#f8f9f4] overflow-y-auto" role="dialog" aria-modal="true" aria-label={stage==='language'?copy.choose:copy.welcome}>
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 w-[720px] h-[720px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(139,92,246,.2),rgba(198,250,88,.08)_45%,transparent_72%)]"/>
-        <div className="absolute top-1/2 left-1/2 w-[600px] h-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#c6fa58]/15 animate-orbit"/>
+    <div className={`fixed inset-0 z-[10000] bg-[#0c100d] text-[#f8f9f4] overflow-y-auto cassify-intro-stage ${stage==='suction'||stage==='exit'?'cassify-portal-zoom':''}`} role="dialog" aria-modal="true" aria-label={stage==='language'?copy.choose:copy.welcome}>
+      <div className="cassify-solar-field absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="cassify-solar-core"/><div className="cassify-solar-orbit cassify-solar-orbit-a"/><div className="cassify-solar-orbit cassify-solar-orbit-b"/><div className="cassify-solar-orbit cassify-solar-orbit-c"/>
+        
       </div>
       {stage==='language' ? (
         <div className="relative z-10 min-h-screen flex items-center justify-center p-5">
@@ -58,7 +58,7 @@ export const IntroSequence: React.FC<{
       ) : (
         <div className="relative z-10 min-h-screen flex flex-col justify-center items-center px-4 py-12">
           <button onClick={onComplete} className="absolute right-5 top-5 text-xs rounded-full border border-white/30 px-4 py-2 hover:bg-white/10">{copy.skip}</button>
-          <div className="relative w-[280px] h-[465px] sm:w-[390px] sm:h-[550px] flex justify-center items-end">
+          <div className="cassify-portal-scene relative w-[280px] h-[465px] sm:w-[390px] sm:h-[550px] flex justify-center items-end">
             <div className="absolute left-1/2 -translate-x-1/2 bottom-7 w-[200px] h-[355px] sm:w-[245px] sm:h-[420px] rounded-t-[130px] border-[11px] border-[#526d4a] shadow-[0_0_90px_rgba(198,250,88,.25)] bg-[#19281e] overflow-visible" style={{perspective:'1100px'}}>
               <div className={`absolute inset-0 rounded-t-full bg-gradient-to-b from-[#fff7d9] via-[#c6fa58] to-[#688b44] transition-opacity duration-1000 ${open?'opacity-100':'opacity-0'}`}/>
               <div className={`cassify-door absolute inset-0 rounded-t-full border-[4px] border-[#74593d] bg-gradient-to-r from-[#533d2c] via-[#846044] to-[#493324] shadow-2xl ${open?'cassify-door-open':''}`}>
