@@ -5,7 +5,7 @@ import { Ribbon } from './components/Ribbon';
 import { JourneySection } from './components/JourneySection';
 import { HowItWorks } from './components/HowItWorks';
 import { CaseArena } from './components/CaseArena';
-import { CaseDialog } from './components/CaseDialog';
+import { GuidedCaseDialog } from './components/GuidedCaseDialog';
 import { AccountPanel } from './components/AccountPanel';
 import { ProgressSection } from './components/ProgressSection';
 import { CampusSection } from './components/CampusSection';
@@ -20,12 +20,22 @@ import { AuthModal } from './components/AuthModal';
 import { ReadingProgressBar } from './components/ReadingProgressBar';
 import { CustomCursor } from './components/CustomCursor';
 import { MentorAvatar } from './components/MentorAvatar';
-import { IntroSequence } from './components/IntroSequence';
+import { IntroSequence } from './components/IntroSequenceV2';
+import { Language } from './data/i18n';
 import { useScrollReveal } from './hooks/useScrollReveal';
 import { CaseItem, CASES_DATA } from './data/cases';
 
 export const App: React.FC = () => {
   const [showIntro, setShowIntro] = useState<boolean>(true);
+  const [language, setLanguage] = useState<Language>(() => {
+    try { const l = localStorage.getItem('cassify_language'); return (['en','hi','kn','ta','te','ml'].includes(l || '') ? l : 'en') as Language; }
+    catch { return 'en'; }
+  });
+  const handleLanguage = (next: Language) => {
+    setLanguage(next);
+    try { localStorage.setItem('cassify_language', next); document.documentElement.lang = next; } catch { /* optional storage */ }
+  };
+  useEffect(() => { document.documentElement.lang = language; }, [language]);
   const [currentView, setCurrentView] = useState<'showcase' | 'dashboard' | 'billing' | 'privacy'>('showcase');
   const [activeCase, setActiveCase] = useState<CaseItem | null>(null);
   const [isInstitutionModalOpen, setIsInstitutionModalOpen] = useState(false);
@@ -98,7 +108,7 @@ export const App: React.FC = () => {
   const earnedXp = Object.keys(savedAnswers).reduce((sum, caseIdStr) => {
     const cId = Number(caseIdStr);
     const item = CASES_DATA.find((c) => c.id === cId);
-    return sum + (item ? item.xp : 0);
+    return sum + (item && savedAnswers[cId] === item.answer ? item.xp : 0);
   }, 0);
 
   const handleSelectAnswer = (caseId: number, answerIndex: number) => {
@@ -198,15 +208,21 @@ export const App: React.FC = () => {
       />
 
       {/* Cinematic Intro Sequence: Background comes first, door opens, professor walks out, bows, casts Abracadabra, launches site */}
-      {showIntro && <IntroSequence onComplete={() => setShowIntro(false)} />}
+      {showIntro && <IntroSequence language={language} onLanguage={handleLanguage} onComplete={() => {
+        setShowIntro(false);
+        setCurrentView('showcase');
+        setActiveCase(CASES_DATA[0]);
+      }} />}
 
       {/* Case Solving Modal */}
-      <CaseDialog
+      <GuidedCaseDialog
         caseItem={activeCase}
         onClose={() => setActiveCase(null)}
         savedAnswer={activeCase ? savedAnswers[activeCase.id] : undefined}
         onSelectAnswer={handleSelectAnswer}
         isUserSignedIn={!!user}
+        language={language}
+        onLanguage={handleLanguage}
       />
 
       {/* Institutional Concept Modal */}
