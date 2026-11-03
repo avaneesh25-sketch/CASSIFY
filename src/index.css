@@ -300,3 +300,31 @@ progress::-moz-progress-bar {
 @media (prefers-reduced-motion: reduce) {
  .prof-cass *, .cassify-door,.cassify-professor-motion { animation:none!important; transition-duration:.01ms!important; }
 }
+
+
+/* Full viewport orbital/solar backdrop; scales with screen size rather than a 600px island. */
+.cassify-solar-field { position:absolute; inset:0; background:radial-gradient(ellipse at 50% 49%,rgba(198,250,88,.18),rgba(139,92,246,.12) 27%,rgba(12,16,13,.95) 77%),#0c100d; }
+.cassify-solar-core { position:absolute; width:30vmin; height:30vmin; min-width:180px; min-height:180px; left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#c6fa58 0%,#a5d457 13%,rgba(198,250,88,.15) 45%,transparent 75%);filter:blur(7px);opacity:.75; }
+.cassify-solar-orbit { position:absolute;left:50%;top:50%;border:1px solid rgba(198,250,88,.3);border-radius:50%;box-shadow:0 0 65px rgba(139,92,246,.13),inset 0 0 40px rgba(198,250,88,.08); }
+.cassify-solar-orbit-a { width:92vmax;height:92vmax;margin-left:-46vmax;margin-top:-46vmax;animation:orbit-spin 36s linear infinite; }
+.cassify-solar-orbit-b { width:140vmax;height:58vmax;margin-left:-70vmax;margin-top:-29vmax;transform:rotate(36deg);animation:cassify-ellipse-one 29s linear infinite; }
+.cassify-solar-orbit-c { width:58vmax;height:140vmax;margin-left:-29vmax;margin-top:-70vmax;animation:cassify-ellipse-two 42s linear infinite; }
+@keyframes cassify-ellipse-one { from{transform:rotate(36deg)}to{transform:rotate(396deg)} }
+@keyframes cassify-ellipse-two { from{transform:rotate(-27deg)}to{transform:rotate(333deg)} }
+/* The character begins beyond the door and emerges after the hinged panel opens. */
+.cassify-professor-motion.inside,.cassify-professor-motion.handle { transform:translateX(-50%) translateY(-15px) scale(.46);opacity:.95;filter:brightness(.55); }
+.cassify-professor-motion.open { transform:translateX(-50%) translateY(-15px) scale(.56);opacity:1;filter:brightness(.75); }
+.cassify-professor-motion.walk { transform:translateX(-50%) translateY(5px) scale(1.03);opacity:1;filter:brightness(1);transition-duration:1.8s; }
+.cassify-professor-motion.greet { transform:translateX(-50%) translateY(5px) scale(1.03);opacity:1; }
+.cassify-professor-motion.suction,.cassify-professor-motion.exit { transform:translateX(-50%) translateY(2px) scale(.72);opacity:0;transition-duration:.8s; }
+.cassify-portal-scene {transform-origin:50% 61%;transition:transform 1.2s cubic-bezier(.2,.7,.12,1),filter 1.2s;}
+.cassify-portal-zoom .cassify-portal-scene {transform:scale(8);filter:brightness(1.5);}
+.cassify-portal-zoom:after {content:'';position:fixed;inset:0;z-index:30;pointer-events:none;background:#e4ffd0;animation:cassify-portal-flash 1.2s ease-in forwards;}
+@keyframes cassify-portal-flash {0%,35%{opacity:0}75%{opacity:.55}100%{opacity:1}}
+/* Avoid crossing legs: preserve separate hip lanes and stride with horizontal displacement.
+   Opposing legs no longer rotate around the same central pivot. */
+.prof-walk .prof-leg-front { animation:prof-foot-lane-front .72s ease-in-out infinite;transform-origin:76px 224px; }
+.prof-walk .prof-leg-back { animation:prof-foot-lane-back .72s ease-in-out infinite;transform-origin:106px 224px; }
+@keyframes prof-foot-lane-front {0%,100%{transform:translate(-5px,-2px)}50%{transform:translate(6px,2px)}}
+@keyframes prof-foot-lane-back {0%,100%{transform:translate(6px,2px)}50%{transform:translate(-5px,-2px)}}
+@media (prefers-reduced-motion:reduce) {.cassify-solar-orbit,.cassify-portal-zoom:after {animation:none!important}.cassify-portal-scene {transition:none!important}.cassify-portal-zoom .cassify-portal-scene {transform:none}}
